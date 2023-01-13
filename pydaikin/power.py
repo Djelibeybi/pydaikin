@@ -65,18 +65,9 @@ class DaikinPowerMixin:
 
     @property
     def support_energy_consumption(self):
-        """Return True if the device supports energy consumption monitoring.
+        """Return True if the device supports energy consumption monitoring."""
 
-        The current criterion is based on "last 2 years consumption > 0" (updated on a monthly
-        basis only) and "last 7 days > 0" (updated in live). One pitfall is that with a new AC
-        the energy consumption can be reported as non-supported during the first month if there
-        is no consumption in the last 7 days.
-        (see https://github.com/home-assistant/core/issues/77877)"""
-        return (
-            (self.energy_consumption(mode=ATTR_TOTAL, time=TIME_THIS_YEAR) or 0)
-            + (self.energy_consumption(mode=ATTR_TOTAL, time=TIME_LAST_YEAR) or 0)
-            + (self.energy_consumption(mode=ATTR_TOTAL, time=TIME_LAST_7_DAYS) or 0)
-        ) > 0
+        return False
 
     def _register_energy_consumption_history(self):
         if not self.support_energy_consumption:
